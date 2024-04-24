@@ -1,48 +1,131 @@
 <!-- @format -->
 
 <template>
-  <div class="w-full h-full static bg-gradient">
-    <v-img
-      src="@/assets/images/nembo.png"
-      class="absolute m-4 top-0 left-0"
-      width="80px"
-    ></v-img>
-    <div class="absolute top-0 right-0 m-4 flex flex-row">
-      <v-btn
-        @click="Login"
-        class="bg-primary2 !rounded-lg border-2 border-primary2"
+  <div class="w-full h-full bg-secondary-background relative">
+    <div
+      :class="{
+        headerstyles: scrollPosition > 14,
+        headerstyles2: scrollPosition < 14,
+      }"
+      class="h-14 z-30 flex justify-between fixed top-0 w-full"
+    >
+      <h2 class="pl-10 text-xl flex items-center font-extrabold flex-row gap-1">
+        <v-icon> mdi-key</v-icon>
+        SECDOC
+      </h2>
+      <ul
+        class="flex flex-row text-base gap-3 justify-around items-center pr-10"
       >
-        Connect
-      </v-btn>
+        <li>Home</li>
+        <li>About</li>
+        <li>Team</li>
+        <li>Contacts</li>
+      </ul>
     </div>
-    <div class="h-full w-full flex flex-col justify-center items-center">
-      <h2 class="text-4xl text-center font-bold my-4">SECDOC</h2>
-      <div class="flex flex-col md:flex-row">
-        <div class="p-4 w-60 mx-2 rounded-lg bg-white my-4 md:my-0">
-          <h2 class="font-bold text-xl text-primary2">Share Document</h2>
-          <span class="text-sm text-center">
-            Securely share sensitive documents within your institution and
-            across institutions.
-          </span>
+    <SvgBackgound1 class="absolute top-0 left-0 ml-[500px]" />
+    <SvgBackground2 class="absolute top-0 left-0 ml-[800px] z-10" />
+
+    <v-container fluid class="mt-14 pt-24 px-10 mb-14">
+      <div
+        class="text-5xl text-secondary-content font-extrabold flex flex-col gap-3"
+      >
+        <p class="">SECURE YOUR</p>
+        <p>DOCUMENTS !</p>
+      </div>
+
+      <div class="mt-[5rem]">
+        <p class="text-2xl text-secondary-content font-semibold w-1/3">
+          Revolutionizing Document Verification Through Blockchain Technology
+        </p>
+      </div>
+
+      <div class="mt-4">
+        <p class="text-sm text-secondary-content font-normal w-1/3">
+          With Secdoc, you can bid farewell to the uncertainties and
+          vulnerabilities of traditional document handling methods and embrace a
+          future where authenticity and integrity are guaranteed. Explore our
+          website to learn more about our innovative approach, and discover how
+          Secdoc is revolutionizing the way we verify documents in the digital
+          age.
+        </p>
+      </div>
+
+      <div class="mt-[6rem] flex">
+        <div class="w-1/3">
+          <button
+            @click="Login"
+            class="rounded-md px-10 py-3 text-lg font-bold text-secondary-background bg-[#22A75D]"
+          >
+            CONNECT
+          </button>
         </div>
-        <div class="p-4 w-60 mx-2 rounded-lg bg-white my-4 md:my-0">
-          <h2 class="font-bold text-xl text-primary2">Verify Document</h2>
-          <span class="text-sm text-justify">
-            Securely share sensitive documents within your institution and
-            across institutions.
-          </span>
+
+        <div
+          class="bg-[#22A75D]/50 rounded-md px-10 py-3 text-lg font-bold text-secondary-background flex gap-2 items-center outline"
+        >
+          <button @click="Login" class="mx-2 hover:bg-[#22A75D]">VERIFY</button>
+          <span
+            class="animate-ping inline-flex h-[20px] w-[20px] rounded-full bg-red-200 opacity-75"
+          ></span>
         </div>
       </div>
-    </div>
-    <div
-      class="absolute bottom-0 w-full bg-gray-100 text-center !text-primary2"
-    >
-      <span class="text-sm"
-        >Developed and Maintained by
-        <a href="https://ega.go.tz" target="_blank" class="font-bold">eGA</a>
-      </span>
-    </div>
+    </v-container>
+
+    <v-container fluid class="mt-20 py-10 bg-gray-200 h-[660px]">
+      <div class="flex flex-row gap-4">
+        <div class="h-96 rounded-md w-1/4 z-20 relative">
+          <div
+            class="absolute w-[200px] h-[200px] rounded-full bg-[#0d1c3b] top-0 left-[50%] ml-[-100px] z-10 border-4 border-white flex items-center justify-center"
+          >
+            <SignDocument />
+          </div>
+
+          <div
+            class="border-2 rounded-md border-gray-300 mt-[100px] bg-[#F2F0F4] h-full"
+          ></div>
+        </div>
+        <div class="h-96 w-1/4 z-20 relative">
+          <div
+            class="absolute flex justify-center items-center w-[200px] h-[200px] rounded-full bg-secondary-focus top-0 left-[50%] ml-[-100px] z-10 border-4 border-white"
+          >
+            <VerifyDoc />
+          </div>
+
+          <div
+            class="border-2 border-gray-300 mt-[100px] bg-[#F2F0F4] h-full rounded-md"
+          ></div>
+        </div>
+        <div class="h-96 w-1/4 z-20 relative">
+          <div
+            class="absolute w-[200px] h-[200px] rounded-full bg-[#34a75d]/70 top-0 left-[50%] ml-[-100px] z-10 border-4 border-white flex justify-center items-center"
+          >
+            <CloudStorage />
+          </div>
+
+          <div
+            class="border-2 border-gray-300 mt-[100px] bg-[#F2F0F4] flex justify-center items-center h-full rounded-md"
+          ></div>
+        </div>
+      </div>
+    </v-container>
+
+    <v-container class="mt-20">
+      <div
+        class="bg-white flex flex-col-reverse sm:flex-row gap-2 items-stretch shadow-md"
+      >
+        <div class="w-full sm:w-1/2 h-max">
+          <FolderLock />
+        </div>
+        <div class="w-full sm:w-1/2 rounded-sm bg-gray-200 text-xl">
+          <div class="flex justify-center h-20 items-center gap-1">
+            <span class="font-semibold">INSTITUTION </span
+            ><span class="font-semibold text-[#127D77]"> REGISTRATION</span>
+          </div>
+        </div>
+      </div>
+    </v-container>
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -50,27 +133,55 @@ import dashboard from "../dashboard.vue";
 import { ethers } from "ethers";
 import { abi, contractAddress } from "../../../secDocConstants";
 import { defineComponent } from "vue";
-
+import SvgBackgound1 from "@/components/icons/svg-backgound-1.vue";
+import SvgBackground2 from "@/components/icons/svg-background-2.vue";
+import Footer from "@/components/shared/footer.vue";
+import FolderLock from "@/components/icons/folder-lock.vue";
+import SignDocument from "@/components/icons/file-sign.vue";
+import VerifyDoc from "@/components/icons/file-verify.vue";
+import CloudStorage from "@/components/icons/file-cloud.vue";
 // Components
 
 export default defineComponent({
   name: "LandingPortal",
   data() {
     return {
+      scrollPosition: null,
+      color: this.appBarColor() || "#000",
       dialog: false,
       orgs: {},
       path: "",
       connected: false,
     };
   },
+  mounted() {
+    window.addEventListener("scroll", this.upDateScrollPosition);
+  },
 
-  components: { dashboard },
+  components: {
+    dashboard,
+    SvgBackgound1,
+    SvgBackground2,
+    FolderLock,
+    Footer,
+    SignDocument,
+    VerifyDoc,
+    CloudStorage,
+  },
   methods: {
     async connectWallet() {
       if (typeof window.ethereum !== "undefined") {
         await window.ethereum.request({ method: "eth_requestAccounts" });
         this.dialog = true;
       }
+    },
+    appBarColor() {
+      return this.scrollPosition > 10
+        ? "rgba(240,205,255,1)"
+        : "rgba(205,205,255,.5)";
+    },
+    upDateScrollPosition() {
+      this.scrollPosition = window.scrollY;
     },
 
     async Login() {
@@ -100,66 +211,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.b-left {
-  background: white;
+.headerstyles {
+  scroll-behavior: smooth;
+  background-color: rgb(27 173 222);
 }
-
-.b-right {
-  background: #1badde;
-  border-left: solid white;
-  border-bottom: solid transparent;
+.headerstyles2 {
+  scroll-behavior: smooth;
+  background-color: rgb(27 173 222 / 0.4);
+  color: rgb(9 80 115 / var(--tw-text-opacity));
 }
-
-.bg-image {
-  background-image: url("../../assets/secdoc.png");
+li {
+  padding: 3px 6px 3px 6px;
 }
-
-.text-big-blue {
-  position: absolute;
-  left: 7.08%;
-  right: 49.17%;
-  top: 12.22%;
-  bottom: 73.11%;
-
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 64px;
-  line-height: 66px;
-  /* or 103% */
-
-  display: flex;
-  align-items: center;
-
-  color: #095073;
-}
-
-.text-big-blue2 {
-  position: absolute;
-  left: 7.08%;
-  right: 49.17%;
-  top: 22.22%;
-  bottom: 65.11%;
-
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 64px;
-  line-height: 66px;
-  /* or 103% */
-
-  display: flex;
-  align-items: center;
-
-  color: #095073;
-}
-
-.form-position {
-  position: absolute;
-  left: 7.08%;
-  right: 49.17%;
-  top: 42.22%;
-  bottom: 45.11%;
-  width: 30%;
+li:hover {
+  background: rgb(240 244 245 /0.8);
+  border-radius: 2px;
 }
 </style>
+
+<!-- style="box-shadow: 0.4px 0.4px 2px 2px gray, -0.4px -0.4px 2px 2px gray" -->

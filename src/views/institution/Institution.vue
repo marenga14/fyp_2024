@@ -1,24 +1,46 @@
 <template>
   <div>
     <nav>
-      <v-navigation-drawer v-model="open" class="bg-secondary-focus relative">
+      <v-navigation-drawer
+        v-model="open"
+        class="bg-secondary-focus/40 relative"
+      >
         <Logo :width="50" :height="80" />
         <hr class="border-neutral-50" />
         <!-- <SidebarImage></SidebarImage> -->
         <NavigationLinks :menu="menu"></NavigationLinks>
 
         <div
-          class="absolute bottom-3 text-red-400 sm:visible w-full boder-2 border-red-100 flex justify-center"
+          class="absolute bottom-3 text-secondary-content sm:visible w-full boder-2 border-red-100 flex justify-center"
         >
           <div
-            class="bg-secondary-background shadow shadow-secondary-content rounded-md w-44 h-52"
-          ></div>
+            class="bg-secondary-background shadow shadow-secondary-content rounded-md w-48 h-60 px-2"
+          >
+            <div class="mt-5">
+              <Progress />
+            </div>
+            <p>75% Used</p>
+            <div class="">
+              <v-progress-linear
+                model-value="20"
+                height="6"
+                rounded="2"
+              ></v-progress-linear>
+            </div>
+            <div class="flex justify-between text-sm font-semibold">
+              <p>65GB</p>
+              <p>100GB</p>
+            </div>
+
+            <button
+              class="my-2 bg-secondary-focus px-5 font-bold text-sm text-secondary-background rounded-sm py-[6px]"
+            >
+              Upgrade
+            </button>
+          </div>
         </div>
       </v-navigation-drawer>
-      <v-toolbar
-        class="bg-secondary-background text-secondary-content flex justify-between"
-        flat
-      >
+      <v-toolbar class="bg-secondary-background flex justify-between" flat>
         <v-app-bar-nav-icon
           class="hidden-md-and-up"
           @click.stop="open = !open"
@@ -47,6 +69,7 @@
 import SidebarImage from "@/components/shared/sidebarImage";
 import Logo from "@/components/icons/logo.vue";
 import NavigationLinks from "@/components/shared/NavigationLinks";
+import Progress from "@/components/icons/progress.vue";
 
 export const menu = [
   {
@@ -72,7 +95,7 @@ export const menu = [
 ];
 export default {
   name: "Institution",
-  components: { SidebarImage, NavigationLinks, Logo },
+  components: { SidebarImage, NavigationLinks, Logo, Progress },
   data() {
     return {
       menu,
