@@ -16,15 +16,15 @@
       <ul
         class="flex flex-row text-base gap-3 justify-around items-center pr-10"
       >
-        <li>Home</li>
-        <li>About</li>
-        <li>Team</li>
-        <li>Contacts</li>
+        <li class="cursor-pointer">Home</li>
+        <li class="cursor-pointer">About</li>
+        <li class="cursor-pointer">Team</li>
+        <li class="cursor-pointer">Contacts</li>
       </ul>
     </div>
     <SvgBackgound1 class="absolute top-0 left-0 ml-[500px]" />
     <SvgBackground2 class="absolute top-0 left-0 ml-[800px] z-10" />
-
+    <HomeLock class="absolute top-10 right-0 z-20" />
     <v-container fluid class="mt-14 pt-24 px-10 mb-14">
       <div
         class="text-5xl text-secondary-content font-extrabold flex flex-col gap-3"
@@ -61,9 +61,11 @@
         </div>
 
         <div
-          class="bg-[#22A75D]/50 rounded-md px-10 py-3 text-lg font-bold text-secondary-background flex gap-2 items-center outline"
+          class="bg-[#22A75D]/50 hover:cursor-pointer rounded-md pl-1 pr-2 py-1 text-xl font-bold text-secondary-background flex gap-2 items-center outline"
         >
-          <button @click="Login" class="mx-2 hover:bg-[#22A75D]">VERIFY</button>
+          <v-btn @click="OpenDialog" flat class="mx-2 py-2 px-10">
+            VERIFY
+          </v-btn>
           <span
             class="animate-ping inline-flex h-[20px] w-[20px] rounded-full bg-red-200 opacity-75"
           ></span>
@@ -82,7 +84,20 @@
 
           <div
             class="border-2 rounded-md border-gray-300 mt-[100px] bg-[#F2F0F4] h-full"
-          ></div>
+          >
+            <div
+              class="flex justify-center text-primary2 mt-28 font-bold text-2xl"
+            >
+              <h2>SIGN <span class="text-[#0d1c3b]">DOCUMENTS</span></h2>
+            </div>
+            <div class="mt-5 px-2 font-thin">
+              <p>
+                Easily sign your important documents digitally with our secure
+                signature tool. Whether it's contracts, agreements, or forms,
+                streamline your paperwork process with just a few clicks.
+              </p>
+            </div>
+          </div>
         </div>
         <div class="h-96 w-1/4 z-20 relative">
           <div
@@ -93,7 +108,23 @@
 
           <div
             class="border-2 border-gray-300 mt-[100px] bg-[#F2F0F4] h-full rounded-md"
-          ></div>
+          >
+            <div
+              class="flex justify-center text-primary2 mt-28 font-bold text-2xl"
+            >
+              <h2>
+                VERIFY <span class="text-secondary-focus">DOCUMENTS</span>
+              </h2>
+            </div>
+
+            <div class="mt-5 px-2 font-thin">
+              <p>
+                Ensure the authenticity and integrity of your documents by
+                verifying them with our robust verification system. Detect any
+                alterations or tampering to maintain trust and compliance.
+              </p>
+            </div>
+          </div>
         </div>
         <div class="h-96 w-1/4 z-20 relative">
           <div
@@ -103,8 +134,23 @@
           </div>
 
           <div
-            class="border-2 border-gray-300 mt-[100px] bg-[#F2F0F4] flex justify-center items-center h-full rounded-md"
-          ></div>
+            class="border-2 border-gray-300 mt-[100px] bg-[#F2F0F4] h-full rounded-md"
+          >
+            <div
+              class="text-primary2 mt-28 font-bold text-2xl flex justify-center"
+            >
+              <h2>STORE <span class="text-[#34a75d]">DOCUMENTS</span></h2>
+            </div>
+
+            <div class="mt-5 px-2 font-thin">
+              <p>
+                Safely store and organize your documents in our secure cloud
+                storage solution. Access your files from anywhere, anytime, and
+                never worry about losing important paperwork again. Your
+                documents are encrypted and backed up for peace of mind.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </v-container>
@@ -117,13 +163,52 @@
           <FolderLock />
         </div>
         <div class="w-full sm:w-1/2 rounded-sm bg-gray-200 text-xl">
-          <div class="flex justify-center h-20 items-center gap-1">
+          <!-- <div class="flex justify-center h-20 items-center gap-1">
             <span class="font-semibold">INSTITUTION </span
             ><span class="font-semibold text-[#127D77]"> REGISTRATION</span>
+          </div> -->
+
+          <div class="px-6 mt-5">
+            <p class="md:text-4xl font-sans font-bold">
+              <span class="text-[#127D77]">A</span>re you a
+              <span>Certificate</span>
+              <span class="text-[#127D77]"> Issuing</span>
+              Institution?
+            </p>
+          </div>
+
+          <div class="px-6 mt-10 py-8 text-xl font-thin">
+            <p class="font-thin">
+              If you are an institution issuing certificates and looking for a
+              reliable partner to streamline your processes and ensure the
+              security of your credentials, we've got you covered. Contact us
+              today to learn more about our registration process and how we can
+              help you manage and authenticate your certificates efficiently.
+            </p>
+          </div>
+
+          <div class="mt-10 flex px-6">
+            <v-btn
+              flat
+              class="flex py-2 px-10 bg-[#22A75D] text-secondary-background"
+            >
+              Contanct us
+            </v-btn>
           </div>
         </div>
       </div>
     </v-container>
+
+    <v-dialog
+      class="absolute top-10 left-5 right-5"
+      v-model="verifydialog"
+      width="600"
+      height="600"
+    >
+      <div class="rounded-lg bg-white" style="width: 600px !important">
+        <VerifyModal />
+      </div>
+    </v-dialog>
   </div>
   <Footer />
 </template>
@@ -140,7 +225,14 @@ import FolderLock from "@/components/icons/folder-lock.vue";
 import SignDocument from "@/components/icons/file-sign.vue";
 import VerifyDoc from "@/components/icons/file-verify.vue";
 import CloudStorage from "@/components/icons/file-cloud.vue";
-// Components
+import HomeLock from "@/components/icons/home-lock.vue";
+import VerifyModal from "./verifyModal.vue";
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
+onMounted(() => {
+  initFlowbite();
+});
 
 export default defineComponent({
   name: "LandingPortal",
@@ -149,6 +241,7 @@ export default defineComponent({
       scrollPosition: null,
       color: this.appBarColor() || "#000",
       dialog: false,
+      verifydialog: false,
       orgs: {},
       path: "",
       connected: false,
@@ -167,6 +260,8 @@ export default defineComponent({
     SignDocument,
     VerifyDoc,
     CloudStorage,
+    HomeLock,
+    VerifyModal,
   },
   methods: {
     async connectWallet() {
@@ -174,6 +269,14 @@ export default defineComponent({
         await window.ethereum.request({ method: "eth_requestAccounts" });
         this.dialog = true;
       }
+    },
+
+    onCloseDialog() {
+      this.dialog = false;
+    },
+    OpenDialog() {
+      console.log("dialog");
+      this.verifydialog = true;
     },
     appBarColor() {
       return this.scrollPosition > 10

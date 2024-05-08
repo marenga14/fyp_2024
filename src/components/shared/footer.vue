@@ -4,7 +4,7 @@
       <span class="text-lg"
         >Developed and Maintained by
         <a href="https://ega.go.tz" target="_blank" class="font-bold"
-          >Marenga Julius</a
+          >students@udsm.ac.tz</a
         >
       </span>
     </div>

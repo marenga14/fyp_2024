@@ -10,10 +10,12 @@
   "dependencies": {
     "@andresouzaabreu/vue-data-table": "^3.3.3",
     "@asigloo/vue-dynamic-forms": "^3.18.1",
+    "@material-tailwind/html": "^2.2.2",
     "@mdi/font": "5.9.55",
     "autoprefixer": "^10",
     "core-js": "^3.8.3",
     "ethers": "^5.7.0",
+    "flowbite": "^2.3.0",
     "ipfs": "^0.63.5",
     "ipfs-client": "^0.8.3",
     "ipfs-http-client": "^57.0.3",

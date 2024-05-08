@@ -2958,6 +2958,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material-tailwind/html@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@material-tailwind/html@npm:2.2.2"
+  dependencies:
+    deepmerge: ^4.2.2
+    material-ripple-effects: ^2.0.1
+  checksum: a2876e91818e6e6d60a493367473ee0b44443865c46bf82e633eba2b519c77770873d40b419dc004ac4882205aa3e76b1953a7dbf91ed7f52dec4c394b56ac33
+  languageName: node
+  linkType: hard
+
 "@mdi/font@npm:5.9.55":
   version: 5.9.55
   resolution: "@mdi/font@npm:5.9.55"
@@ -3090,6 +3100,13 @@ __metadata:
   version: 1.0.0-next.21
   resolution: "@polka/url@npm:1.0.0-next.21"
   checksum: c7654046d38984257dd639eab3dc770d1b0340916097b2fac03ce5d23506ada684e05574a69b255c32ea6a144a957c8cd84264159b545fca031c772289d88788
+  languageName: node
+  linkType: hard
+
+"@popperjs/core@npm:^2.9.3":
+  version: 2.11.8
+  resolution: "@popperjs/core@npm:2.11.8"
+  checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
   languageName: node
   linkType: hard
 
@@ -6361,6 +6378,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^4.2.2":
+  version: 4.3.1
+  resolution: "deepmerge@npm:4.3.1"
+  checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
+  languageName: node
+  linkType: hard
+
 "default-gateway@npm:^6.0.2, default-gateway@npm:^6.0.3":
   version: 6.0.3
   resolution: "default-gateway@npm:6.0.3"
@@ -7643,6 +7667,16 @@ __metadata:
   version: 3.2.7
   resolution: "flatted@npm:3.2.7"
   checksum: 427633049d55bdb80201c68f7eb1cbd533e03eac541f97d3aecab8c5526f12a20ccecaeede08b57503e772c769e7f8680b37e8d482d1e5f8d7e2194687f9ea35
+  languageName: node
+  linkType: hard
+
+"flowbite@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "flowbite@npm:2.3.0"
+  dependencies:
+    "@popperjs/core": ^2.9.3
+    mini-svg-data-uri: ^1.4.3
+  checksum: 771a59940d07c83669a4b04af2df8097181ba88af67487c1bafb124e33258636037944ffe3b92ef5d2766d687774bb86680e066c4d0ed22915ec624d57a8019b
   languageName: node
   linkType: hard
 
@@ -10790,6 +10824,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"material-ripple-effects@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "material-ripple-effects@npm:2.0.1"
+  checksum: f23dd7869fe03aad7cdf1b348fcf17f22cf1f9eab9272e6a86b64b653e42814b54de243fea81133c78090a6649c5137a5982b5ef133db3dcd62acc05e644e099
+  languageName: node
+  linkType: hard
+
 "mdn-data@npm:2.0.14":
   version: 2.0.14
   resolution: "mdn-data@npm:2.0.14"
@@ -10937,6 +10978,15 @@ __metadata:
   peerDependencies:
     webpack: ^5.0.0
   checksum: df60840404878c4832b4104799fd29c5a89b06b1e377956c8d4a5729efe0ef301a52e5087d6f383871df5e69a8445922a0ae635c11abf412d7645a7096d0e973
+  languageName: node
+  linkType: hard
+
+"mini-svg-data-uri@npm:^1.4.3":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
   languageName: node
   linkType: hard
 
@@ -13781,6 +13831,7 @@ __metadata:
     "@babel/core": ^7.12.16
     "@babel/eslint-parser": ^7.12.16
     "@babel/polyfill": ^7.7.0
+    "@material-tailwind/html": ^2.2.2
     "@mdi/font": 5.9.55
     "@vue/cli-plugin-babel": ~5.0.0
     "@vue/cli-plugin-router": ~5.0.0
@@ -13792,6 +13843,7 @@ __metadata:
     eslint: ^7.32.0
     eslint-plugin-vue: ^8.0.3
     ethers: ^5.7.0
+    flowbite: ^2.3.0
     ipfs: ^0.63.5
     ipfs-client: ^0.8.3
     ipfs-http-client: ^57.0.3
