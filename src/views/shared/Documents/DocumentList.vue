@@ -5,14 +5,18 @@
     <div class="shadow-inner shadow-gray-400 py-6 rounded-md mt-5">
       <div class="flex justify-start pl-8">
         <div
-          class="border-2 border-dotted border-gray-400 rounded-sm h-28 flex justify-center items-center w-40 bg-gray-200"
+          class="border-2 hover:cursor-pointer border-dotted border-gray-400 rounded-sm h-28 flex justify-center items-center w-40 bg-gray-200"
         >
           <v-icon class="text-primary2" size="40">mdi-plus</v-icon>
         </div>
       </div>
 
       <div class="flex flex-row flex-wrap gap-1 mt-4 pl-8">
-        <div :key="index" v-for="(folder, index) of folders" class="">
+        <div
+          :key="index"
+          v-for="(folder, index) of folders"
+          class="hover:cursor-pointer"
+        >
           <FolderComponent :title="folder" />
         </div>
       </div>
@@ -28,8 +32,14 @@
         <template #actions="{ data }">
           <action-button
             @click="openDoc(data)"
+            name="Append document +"
+            styles="bg-secondary-focus px-4 py-2 text-white"
+          >
+          </action-button>
+          <action-button
+            @click="openDoc(data)"
             name="View"
-            styles="bg-gradient"
+            styles="px-8 py-2 bg-secondary text-white"
           >
           </action-button>
         </template>
@@ -61,14 +71,14 @@ export default {
   data() {
     return {
       columns: {
-        documentName: "Document Name",
-        documentDescription: "Description",
+        documentId: "Document ID",
+        documentOwner: "Document Owner",
         time: "Created Date",
       },
       documents: [],
       folders: ["Work", "Personal", "Students"],
       pdfSrc: "/Real.pdf",
-      isDocs: this.documents ? this.documents.length > 0 : false,
+      isDocs: false,
     };
   },
   methods: {
@@ -83,6 +93,7 @@ export default {
       this.$store.dispatch("fetchAllDocuments").then(() => {
         this.$store.dispatch("setLoadingStatus", false);
         this.documents = this.$store.getters.getAllDocuments;
+        if (this.documents.length > 0) this.isDocs = true;
       });
     },
   },

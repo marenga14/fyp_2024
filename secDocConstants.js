@@ -1,7 +1,33 @@
-import { create } from "ipfs-client";
+//import { create } from "ipfs-client";
 
+// import { create } from "ipfs-http-client";
+
+// export const ipfsClient = create({
+//   host: "https://ipfs.infura.io:5001/api/v0",
+//   headers: {
+//     Authorization:
+//       "Basic " +
+//       btoa(
+//         "2G1bHUGzqF6NbfMrG21ohOzFD3E" + ":" + "6ae2d11381cd9eec8f395593b9d3f053"
+//       ),
+//   },
+// });
+
+import { create } from "ipfs-http-client";
+import { Buffer } from "buffer";
+
+const projectId = "2G1bHUGzqF6NbfMrG21ohOzFD3E";
+const projectSecret = "6ae2d11381cd9eec8f395593b9d3f053";
+const auth =
+  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
 export const ipfsClient = create({
-  http: "/ip4/127.0.0.1/tcp/5001",
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  apiPath: "/api/v0",
+  headers: {
+    authorization: auth,
+  },
 });
 
 export const ipfsGateway = "http://127.0.0.1:8080/ipfs/";

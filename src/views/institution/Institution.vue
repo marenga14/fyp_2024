@@ -3,7 +3,7 @@
     <nav>
       <v-navigation-drawer
         v-model="open"
-        class="bg-secondary-focus/40 relative"
+        class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md"
       >
         <Logo :width="50" :height="80" />
         <hr class="border-neutral-50" />
@@ -40,7 +40,10 @@
           </div>
         </div>
       </v-navigation-drawer>
-      <v-toolbar class="bg-secondary-background flex justify-between" flat>
+      <v-toolbar
+        class="bg-secondary-background flex justify-between mt-2 mx-1 rounded-md"
+        flat
+      >
         <v-app-bar-nav-icon
           class="hidden-md-and-up"
           @click.stop="open = !open"
@@ -51,7 +54,7 @@
         </v-toolbar-title>
 
         <div class="inline-flex flex-row">
-          <span class="flex items-center">UDSM</span>
+          <!-- <span class="flex items-center">UDSM</span> -->
 
           <v-btn router to="/" icon>
             <v-icon router to="/">mdi-logout</v-icon>
@@ -59,7 +62,7 @@
         </div>
       </v-toolbar>
     </nav>
-    <div class="p-2">
+    <div class="p-2 mx-2 bg-gray-100 py-4 rounded-md">
       <router-view></router-view>
     </div>
   </div>

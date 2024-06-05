@@ -3,7 +3,13 @@
     <AppHeader title="Institution Users"></AppHeader>
     <UserAdd />
     <div class="my-2">
-      <simple-data-table :columns="columns" :table-data="users"></simple-data-table>
+      <simple-data-table
+        class="h-full"
+        :columns="columns"
+        :table-data="users"
+        :hasData="isDocs"
+      >
+      </simple-data-table>
     </div>
   </div>
 </template>
@@ -15,30 +21,29 @@ import SimpleDataTable from "@/components/shared/SimpleDataTable";
 
 export default {
   name: "UsersList",
-  components: {SimpleDataTable, UserAdd, AppHeader},
+  components: { SimpleDataTable, UserAdd, AppHeader },
   data() {
     return {
       users: [],
       columns: {
         name: "Name",
         userAddress: "Address",
-        position: "Position"
-      }
-    }
+        position: "Position",
+      },
+      isDocs: false,
+    };
   },
   mounted() {
-    this.$store.dispatch('clearUsers')
-    this.$store.dispatch('setLoadingStatus', true)
-    this.$store.dispatch('fetchAllUsers').then(
-        () => {
-          this.$store.dispatch('setLoadingStatus', false)
-          this.users = this.$store.getters.getAllUsers
-        }
-    )
-  }
-}
+    this.$store.dispatch("clearUsers");
+    this.$store.dispatch("setLoadingStatus", true);
+    this.$store.dispatch("fetchAllUsers").then(() => {
+      this.$store.dispatch("setLoadingStatus", false);
+      this.users = this.$store.getters.getAllUsers;
+
+      if (this.users.length > 0) this.isDocs = true;
+    });
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

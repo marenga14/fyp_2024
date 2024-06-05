@@ -297,6 +297,7 @@ export default defineComponent({
 
         try {
           const user = await contract.operatorLogin(signer.getAddress());
+          console.log(user);
 
           if (user) {
             this.path = user;
