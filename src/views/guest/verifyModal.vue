@@ -24,12 +24,6 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
-
-onMounted(() => {
-  initFlowbite();
-});
 export default {
   name: "VerifyModal",
   components: {},
@@ -48,9 +42,6 @@ export default {
 
       if (valid) alert("Form is valid");
     },
-  },
-  mounted() {
-    initFlowbite();
   },
 };
 </script>

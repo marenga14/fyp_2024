@@ -200,10 +200,10 @@
     </v-container>
 
     <v-dialog
-      class="absolute top-10 left-5 right-5"
+      class="fixed top-[30%] left-5 right-5"
       v-model="verifydialog"
       width="600"
-      height="600"
+      height="800"
     >
       <div class="rounded-lg bg-white" style="width: 600px !important">
         <VerifyModal />
@@ -229,10 +229,6 @@ import HomeLock from "@/components/icons/home-lock.vue";
 import VerifyModal from "./verifyModal.vue";
 import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
-
-onMounted(() => {
-  initFlowbite();
-});
 
 export default defineComponent({
   name: "LandingPortal",
