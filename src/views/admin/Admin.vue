@@ -40,7 +40,7 @@ let menu = [
   {
     name: "Settings",
     icon: "setting",
-    route: "/",
+    route: "/admin/settings",
   },
 ];
 export default {

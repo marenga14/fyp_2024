@@ -9,35 +9,40 @@
         ></DialogHeader>
 
         <div>
-          <v-form ref="form" class="p-2">
+          <v-form
+            @submit.prevent="addDocument"
+            ref="form"
+            class="p-2 shadow-md rounded-md m-2 bg-gray-200"
+          >
             <div class="mt-1 pt-2 font-thin text-sm">
               <span class="">Certificate Owner</span>
             </div>
 
             <v-text-field
-              v-model="key"
+              v-model="ownerName"
               :counter="10"
+              @change="onChanges"
               :rules="nameRules"
-              label="eg.Julius Marenga"
+              placeholder="eg.Julius Marenga"
               required
             ></v-text-field>
             <div class="mt-1 font-thin text-sm">
               <span class="">Purpose/Description</span>
             </div>
             <v-text-field
-              v-model="cid"
-              :counter="10"
-              :rules="nameRules"
-              label="Eg. Course Completion"
+              name="description"
+              @change="onChangedescs"
+              v-model="description"
+              placeholder="Eg. Course Completion"
               required
             ></v-text-field>
-            <div class="">
+            <!-- <div class="">
               <span>GeneratedId- </span>
               <span> {{ randomuuid }}</span>
-            </div>
+            </div> -->
 
             <div class="flex justify-end w-full px-2 py-2">
-              <v-btn class="mt-4 bg-gradient" color="" block @click="validate">
+              <v-btn type="submit" class="mt-4 bg-gradient" color="" block>
                 SUBMIT
               </v-btn>
             </div>
@@ -93,27 +98,34 @@ export default {
       dialog: false,
       DocumentAddFields,
       file: null,
+      description: undefined,
       randomuuid: undefined,
       name: "",
       nameRules: [
         (v) => !!v || "Name is required",
-        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+        (v) =>
+          (v && v.length >= 3) || "Name must be greater than 10 characters",
       ],
     };
   },
   methods: {
-    async addDocument(documentData) {
-      if (this.file) {
-        this.$store.dispatch("addDocument", {
-          ...documentData,
-          file: this.file,
-        });
-        this.dialog = false;
-      }
+    async addDocument() {
+      console.log(this.name, this.description);
+      this.$store.dispatch("addDocument", {
+        ownerName: this.name,
+        description: this.description,
+        identification: this.randomuuid,
+      });
+
+      this.dialog = false;
     },
     async onChanges(e) {
-      this.file = e.target.files[0];
-      return this.file;
+      this.name = e.target.value;
+      return this.name;
+    },
+    async onChangedescs(e) {
+      this.name = e.target.value;
+      return this.name;
     },
     handleErrors(err) {
       console.log(err);

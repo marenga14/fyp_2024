@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingPortal from "../views/guest/LandingPortal.vue";
 import OrganizationList from "../views/admin/Organizations/OrganizationsList.vue";
 import { checkeradmin, checkerer, checkerr } from "../../auth/isauth";
+import Settings from "@/views/shared/Documents/settings.vue";
 import Admin from "../views/admin/Admin";
 import AdminDashboard from "@/views/admin/AdminDashboard";
 import Institution from "@/views/institution/Institution";
@@ -123,7 +124,7 @@ export const routes = [
     name: "home",
     component: LandingPortal,
   },
-  ,
+
   {
     path: "/admin",
     redirect: "/admin/dashboard",
@@ -137,6 +138,10 @@ export const routes = [
       {
         path: "institutions",
         component: OrganizationList,
+      },
+      {
+        path: "settings",
+        component: Settings,
       },
     ],
   },
@@ -169,6 +174,10 @@ export const routes = [
         component: DocumentDetails,
         meta: { userAccessed: "institution" },
       },
+      {
+        path: "settings",
+        component: Settings,
+      },
     ],
   },
   {
@@ -195,6 +204,11 @@ export const routes = [
         path: "document-details/:cid",
         component: DocumentDetails,
         meta: { userAccessed: "operator" },
+      },
+      {
+        path: "/settings",
+        name: "settings",
+        component: Settings,
       },
     ],
   },

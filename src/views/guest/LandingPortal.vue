@@ -227,8 +227,6 @@ import VerifyDoc from "@/components/icons/file-verify.vue";
 import CloudStorage from "@/components/icons/file-cloud.vue";
 import HomeLock from "@/components/icons/home-lock.vue";
 import VerifyModal from "./verifyModal.vue";
-import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
 
 export default defineComponent({
   name: "LandingPortal",

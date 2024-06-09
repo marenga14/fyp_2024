@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     openDoc(document) {
+      console.log(this.documents);
       this.$router.push(
         `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}`
       );
