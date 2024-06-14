@@ -81,7 +81,7 @@ export const menu = [
     route: "/institution/dashboard",
   },
   {
-    name: "Users",
+    name: "Operators",
     icon: "people",
     route: "/institution/users",
   },

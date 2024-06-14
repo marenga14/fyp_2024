@@ -13,6 +13,7 @@ import DocumentView from "@/views/shared/Documents/DocumentView.vue";
 import DocumentDetails from "@/views/shared/Documents/DocumentDetails.vue";
 import Operator from "@/views/operator/Operator.vue";
 import OperatorDashboard from "@/views/operator/OperatorDashboard.vue";
+import verifyTest from "@/views/guest/verify.test.vue";
 
 async function checkAuth(to, from, next) {
   // let isAuthenticated = await checkerr();
@@ -209,6 +210,18 @@ export const routes = [
         path: "/settings",
         name: "settings",
         component: Settings,
+      },
+    ],
+  },
+
+  {
+    path: "/verify",
+    name: "verify",
+    component: verifyTest,
+    children: [
+      {
+        path: "document-view/:cid/:documentName",
+        component: DocumentView,
       },
     ],
   },

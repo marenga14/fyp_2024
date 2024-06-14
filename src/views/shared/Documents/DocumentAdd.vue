@@ -110,7 +110,6 @@ export default {
   },
   methods: {
     async addDocument() {
-      console.log(this.name, this.description);
       this.$store.dispatch("addDocument", {
         ownerName: this.name,
         description: this.description,
@@ -124,8 +123,8 @@ export default {
       return this.name;
     },
     async onChangedescs(e) {
-      this.name = e.target.value;
-      return this.name;
+      this.description = e.target.value;
+      return this.description;
     },
     handleErrors(err) {
       console.log(err);

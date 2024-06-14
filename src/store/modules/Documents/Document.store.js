@@ -2,10 +2,12 @@ import { ethers } from "ethers";
 import { abi, contractAddress, ipfsClient } from "../../../../secDocConstants";
 import { notifyError, notifySuccess } from "@/services/notificationService";
 import { getFormatedTimeStampStartWithDate } from "@/interfaces/global.interface";
+import * as dayjs from "dayjs";
 
 export const DocumentStore = {
   state: {
     allDocuments: [],
+    currentDocument: undefined,
   },
   getters: {
     getAllDocuments(state) {
@@ -21,8 +23,12 @@ export const DocumentStore = {
     addDocument(state, document) {
       state.allDocuments.push({ ...document });
     },
+    updateDocument(state, document) {},
     setAllDocuments(state, documents) {
       state.allDocuments = documents;
+    },
+    setCurrentDocument(state, document) {
+      state.document = document;
     },
     clearDocuments(state) {
       state.allDocuments = [];
@@ -34,19 +40,23 @@ export const DocumentStore = {
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, abi, signer);
       let allDocuments = await contract.getDocuments(signer.getAddress());
-      console.log(allDocuments);
+
       allDocuments = allDocuments.map((document) => {
         return {
           documentName: document.docName,
           documentDescription: document.description,
-          time: document.time,
+          time: dayjs(document.time).format("dddd, MMMM D YYYY"),
           documentCid: document.cidValue,
+          documentId: document.identification,
+          documentOwner: document.ownerName,
+          sender: document.sender,
+          hasDocument: document.hasDocument,
+          status: document.hasDocument ? "True" : "False",
         };
       });
       context.commit("setAllDocuments", allDocuments);
     },
     async addDocument(context, documentData) {
-      console.log(documentData);
       const identification = documentData.identification;
       const ownerName = documentData.ownerName;
       const cid = "XXXX-XXXX-XXXX";
@@ -73,6 +83,8 @@ export const DocumentStore = {
             documentDescription,
             time,
             documentCid: cid,
+            ownerName,
+            identification,
           });
           await notifySuccess("Added document successfully!");
         } else {
@@ -84,32 +96,36 @@ export const DocumentStore = {
     },
 
     async updateDocument(context, documentData) {
-      const documentName = documentData.file.name;
-      const documentDescription = documentData.documentDescription;
+      const identification = documentData.identification;
       const cid = await ipfsClient.add(documentData.file);
+      console.log(cid);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, abi, signer);
-      const time = getFormatedTimeStampStartWithDate();
-
-      const storedResponse = await contract.storeDocument(
+      console.log(cid.path, identification);
+      const storedResponse = await contract.updateDocumentFile(
         cid.path,
-        time,
-        documentDescription,
-        documentName
+        identification
       );
 
       if (storedResponse.hash) {
-        context.commit("addDocument", {
-          documentName,
-          documentDescription,
-          time,
+        context.commit("updateDocument", {
           documentCid: cid.path,
         });
-        await notifySuccess("Added document successfully!");
+        await notifySuccess("Updated document successfully!");
       } else {
-        await notifyError("Failed to add document!");
+        await notifyError("Failed to updating document!");
       }
+    },
+    async retrieveSingleDocument(context, documentData) {
+      const identification = documentData.identification;
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+      let document = await contract.returnDocument(identification);
+      context.commit("setCurrentDocument", document);
+
+      return document;
     },
     clearDocuments(context) {
       context.commit("clearDocuments");

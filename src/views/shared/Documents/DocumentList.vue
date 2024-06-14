@@ -2,6 +2,40 @@
   <div>
     <app-header title="Documents"></app-header>
     <document-add></document-add>
+    <v-dialog v-model="dialog" width="500">
+      <div class="rounded-lg bg-white" style="width: 600px !important">
+        <DialogHeader
+          class="!w-full"
+          :dialog="dialog"
+          @dialog="onCloseDialog"
+        ></DialogHeader>
+        <div
+          class="px-4 py-4 h-15 items-center flex bg-gray-300 text-gradient font-semibold text-lg border-b-white rounded-md"
+        >
+          <p>Append Certificate</p>
+        </div>
+
+        <div>
+          <v-form
+            @submit.prevent="updateDocFunction"
+            ref="form"
+            class="px-2 shadow-md rounded-md mx-2 my-6 py-4 bg-gray-200"
+          >
+            <input
+              @change="onChanges"
+              type="file"
+              id="document"
+              class="file mx-4"
+            />
+            <div class="flex justify-end w-full px-2 py-2">
+              <v-btn type="submit" class="mt-4 bg-gradient" color="" block>
+                SUBMIT
+              </v-btn>
+            </div>
+          </v-form>
+        </div>
+      </div>
+    </v-dialog>
     <div class="shadow-inner shadow-gray-400 py-6 rounded-md mt-5">
       <div class="flex justify-start pl-8">
         <div
@@ -30,18 +64,21 @@
         has-actions="true"
       >
         <template #actions="{ data }">
-          <action-button
-            @click="openDoc(data)"
-            name="Append document +"
-            styles="bg-secondary-focus px-4 py-2 text-white"
-          >
-          </action-button>
-          <action-button
-            @click="openDoc(data)"
-            name="View"
-            styles="px-8 py-2 bg-secondary text-white"
-          >
-          </action-button>
+          <div class="flex">
+            <action-button
+              v-if="!data.hasDocument"
+              @click="updateDoc(data)"
+              name="Append document +"
+              styles="bg-secondary-focus px-4 py-2 text-white"
+            >
+            </action-button>
+            <action-button
+              @click="openDoc(data)"
+              name="View"
+              styles="px-8 py-2 bg-secondary text-white flex items-center font-semibold "
+            >
+            </action-button>
+          </div>
         </template>
       </simple-data-table>
     </div>
@@ -71,14 +108,20 @@ export default {
   data() {
     return {
       columns: {
-        documentId: "Document ID",
-        documentOwner: "Document Owner",
+        documentId: "Certificate ID",
+        documentOwner: "Certificate Owner",
         time: "Created Date",
+        status: "Assigned",
+        documentDescription: "Purpose",
       },
       documents: [],
+      hasDocument: true,
       folders: ["Work", "Personal", "Students"],
       pdfSrc: "/Real.pdf",
       isDocs: false,
+      dialog: false,
+      document: undefined,
+      file: null,
     };
   },
   methods: {
@@ -87,6 +130,21 @@ export default {
       this.$router.push(
         `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}`
       );
+    },
+    updateDocFunction() {
+      if (!this.file) return;
+
+      this.$store.dispatch("updateDocument", {
+        file: this.file,
+        identification: this.document.documentId,
+      });
+      this.dialog = false;
+    },
+    updateDoc(document) {
+      (this.document = document), (this.dialog = true);
+    },
+    onChanges(e) {
+      this.file = e.target.files[0];
     },
     async retrieveFiles() {
       this.$store.dispatch("clearDocuments");
