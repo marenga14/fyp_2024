@@ -23,6 +23,7 @@ export const DocumentStore = {
     addDocument(state, document) {
       state.allDocuments.push({ ...document });
     },
+    verifyingDocument(state, cid) {},
     updateDocument(state, document) {},
     setAllDocuments(state, documents) {
       state.allDocuments = documents;
@@ -98,11 +99,11 @@ export const DocumentStore = {
     async updateDocument(context, documentData) {
       const identification = documentData.identification;
       const cid = await ipfsClient.add(documentData.file);
-      console.log(cid);
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, abi, signer);
-      console.log(cid.path, identification);
+
       const storedResponse = await contract.updateDocumentFile(
         cid.path,
         identification
@@ -127,6 +128,23 @@ export const DocumentStore = {
 
       return document;
     },
+
+    async verifyingDocument(context, documentData) {
+      const cid = await ipfsClient.add(documentData.file);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      try {
+        const status = await contract.verifyDocument(cid.path);
+        context.commit("verfying.....", document);
+        console.log(status);
+        return status;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     clearDocuments(context) {
       context.commit("clearDocuments");
     },

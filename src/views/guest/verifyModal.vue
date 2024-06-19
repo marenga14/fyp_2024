@@ -73,17 +73,44 @@
       role="tabpanel"
       aria-labelledby="contacts-tab"
     >
-      <v-form ref="form">
+      <v-form v-if="!verify" ref="form">
         <div class="bg-[#f6f6f6] border h-14">
-          <v-file-input class="h-full" label="Upload document"></v-file-input>
+          <v-file-input
+            @change="onchangeFile"
+            class="h-full"
+            label="Upload document"
+          ></v-file-input>
         </div>
 
         <div class="flex justify-end w-1/2">
-          <v-btn class="mt-4" color="success" block @click="validate">
+          <v-btn class="mt-4" color="success" block @click="verifyDocument">
             Verify
           </v-btn>
         </div>
       </v-form>
+
+      <div v-if="loading" class="flex justify-center items-center h-10 mt-10">
+        <v-progress-circular
+          :size="30"
+          color="success"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+
+      <div v-if="verify" class="flex items-center justify-center h-40">
+        <div
+          v-if="validDoc"
+          class="h-full bg-green-200 text-gray-300 font-semibold text-xl flex justify-center items-center w-full"
+        >
+          <h2>Valid....</h2>
+        </div>
+        <div
+          v-if="!validDoc"
+          class="h-full bg-red-200 text-gray-800 font-semibold text-xl flex justify-center items-center w-full"
+        >
+          <h2>InValid....</h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -103,6 +130,10 @@ export default {
     return {
       name: "",
       documentId: undefined,
+      verify: false,
+      validDoc: false,
+      loading: false,
+      file: null,
       data: undefined,
       nameRules: [
         (v) => !!v || "Name is required",
@@ -121,16 +152,30 @@ export default {
       this.$router.push(
         `/verify/document-view/${this.data.cidValue}/${documentName}`
       );
+    },
 
-      console.log(this.data);
+    async verifyDocument() {
+      this.loading = true;
+      if (!this.file) return;
+      this.validDoc = await this.$store.dispatch("verifyingDocument", {
+        file: this.file,
+      });
+      this.loading = false;
+      this.verify = true;
+      console.log(this.validDoc);
     },
 
     async onChangeFunc(e) {
       this.documentId = e.target.value;
     },
+
+    onchangeFile(e) {
+      this.file = e.target.files[0];
+    },
   },
   mounted() {
     initFlowbite();
+    this.verify = false;
   },
 };
 </script>
