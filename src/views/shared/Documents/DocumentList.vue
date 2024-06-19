@@ -36,7 +36,9 @@
         </div>
       </div>
     </v-dialog>
-    <div class="shadow-inner shadow-gray-400 py-6 rounded-md mt-5">
+    <div
+      class="bg-[url('/public/images/palette.svg')] bg-cover h-40 bg-no-repeat shadow-inner shadow-gray-400 py-6 rounded-md mt-5"
+    >
       <div class="flex justify-start pl-8">
         <div
           class="border-2 hover:cursor-pointer border-dotted border-gray-400 rounded-sm h-28 flex justify-center items-center w-40 bg-gray-200"
@@ -45,7 +47,7 @@
         </div>
       </div>
 
-      <div class="flex flex-row flex-wrap gap-1 mt-4 pl-8">
+      <!-- <div class="flex flex-row flex-wrap gap-1 mt-4 pl-8">
         <div
           :key="index"
           v-for="(folder, index) of folders"
@@ -53,7 +55,7 @@
         >
           <FolderComponent :title="folder" />
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="my-2">
       <simple-data-table
@@ -111,7 +113,7 @@ export default {
         documentId: "Certificate ID",
         documentOwner: "Certificate Owner",
         time: "Created Date",
-        status: "Assigned",
+        status: "Printed",
         documentDescription: "Purpose",
       },
       documents: [],

@@ -51,7 +51,7 @@ export const DocumentStore = {
           documentOwner: document.ownerName,
           sender: document.sender,
           hasDocument: document.hasDocument,
-          status: document.hasDocument ? "True" : "False",
+          status: document.hasDocument ? "Yes" : "No",
         };
       });
       context.commit("setAllDocuments", allDocuments);

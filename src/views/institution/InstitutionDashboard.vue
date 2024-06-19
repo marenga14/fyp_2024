@@ -1,26 +1,24 @@
 <template>
-  <div>Dashboard</div>
-
   <div
-    class="flex fex-row flex-wrap gap-2 w-full p-2 justify-start mt-5 shadow-gray-200 rounded-md"
+    class="bg-[url('/public/images/palette.svg')] items-center bg-no-repeat bg-cover flex fex-row flex-wrap gap-2 w-full px-4 justify-start shadow-gray-200 rounded-md md:h-96"
   >
-    <div :key="index" v-for="(card, index) of cards" class="w-1/4 h-52">
+    <!-- <div :key="index" v-for="(card, index) of cards" class="w-1/4 h-72">
       <v-card class="w-full h-full">
         <v-card-title
-          class="text-xl font-bold bg-secondary-content text-secondary-background h-12"
+          class="text-3xl font-bold text-secondary-content flex items-center bg-gray-100 border h-16"
         >
           {{ card.name }}
         </v-card-title>
         <v-card-text
-          class="h-40 flex justify-center items-center text-secondary-content text-5xl font-extrabold"
+          class="h-40 flex justify-center items-center text-secondary-content text-7xl font-extrabold"
           >{{ card.number }}</v-card-text
         >
       </v-card>
-    </div>
+    </div> -->
   </div>
 
   <div class="bg-gray-200 rounded-md h-[540px] mt-6">
-    <div class="flex justify-between bg-gray-100 p-2 border">
+    <!-- <div class="flex justify-between bg-gray-100 p-2 border">
       <input
         placeholder="Search"
         class="w-1/4 rounded-md py-1 px-4 bg-gray-300"
@@ -33,10 +31,10 @@
           <v-btn>Yearly</v-btn>
         </v-btn-group>
       </div>
-    </div>
-    <div class="w-full h-[470px] mx-auto px-4 py-2">
+    </div> -->
+    <!-- <div class="w-full h-[470px] mx-auto px-4 py-2">
       <canvas id="acquisitions"></canvas>
-    </div>
+    </div> -->
   </div>
 </template>
 

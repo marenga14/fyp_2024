@@ -3,7 +3,7 @@
     <nav>
       <v-navigation-drawer
         v-model="open"
-        class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md"
+        class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md "
       >
         <Logo :width="50" :height="80" />
         <hr class="border-neutral-50" />
