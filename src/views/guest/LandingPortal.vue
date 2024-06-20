@@ -63,7 +63,7 @@
         <div
           class="bg-[#22A75D] hover:cursor-pointer rounded-md pl-1 pr-2 py-1 text-xl font-bold text-secondary-background flex gap-2 items-center"
         >
-          <v-btn @click="OpenDialog" flat class="mx-2 py-2 px-10">
+          <v-btn @click="OpenDialog" flat class="mx-2 py-2 px-10 bg-[#22A75D]">
             VERIFY
           </v-btn>
           <span
