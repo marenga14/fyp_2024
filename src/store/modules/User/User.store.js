@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import VuexPersistence from "vuex-persist";
 import { ethers } from "ethers";
 import { abi, contractAddress } from "../../../../secDocConstants";
 import swal from "sweetalert2";
@@ -9,13 +10,25 @@ import {
 } from "@/services/notificationService";
 import { getSignerContract } from "@/interfaces/global.interface";
 
+// VuexPersistence configuration
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  reducer: (state) => ({
+    logeInUser: state.logeInUser, // Persisting only the logeInUser state
+  }),
+});
+
 export const UserStore = {
   state: {
     allUsers: [],
+    logeInUser: {},
   },
   getters: {
     getAllUsers(state) {
       return state.allUsers;
+    },
+    getCurrentUser(state) {
+      return state.logeInUser;
     },
   },
   mutations: {
@@ -23,42 +36,49 @@ export const UserStore = {
       state.allUsers.push(user);
     },
     setAllUsers(state, users) {
-      users.forEach((user) => {
-        state.allUsers.push({
-          name: user.name,
-          organization: user.organisation,
-          position: user.position,
-          userAddress: user.userAddress,
-        });
-      });
+      state.allUsers = users.map((user) => ({
+        name: user.name,
+        organization: user.organisation,
+        position: user.position,
+        userAddress: user.userAddress,
+      }));
+    },
+    setCurrentLogedInUser(state, user) {
+      const logedUser = {
+        user_Addres: user.userAddres,
+        user_Type: user.userType,
+        name: user.name ? user.name : user.orgName,
+        org_Name: user.orgName,
+      };
+      state.logeInUser = logedUser;
     },
     clearUsers(state) {
       state.allUsers = [];
     },
   },
   actions: {
-    clearUsers(context) {
-      context.commit("clearUsers");
+    clearUsers({ commit }) {
+      commit("clearUsers");
     },
-    async fetchAllUsers(context, params) {
+    async loginUser({ commit }, contentData) {
+      const user = contentData.user;
+      commit("setCurrentLogedInUser", user);
+    },
+    async fetchAllUsers({ commit }, params) {
       const signerContract = await getSignerContract();
-      await signerContract.contract.testingAddress(
-        signerContract.signer.getAddress()
-      );
       const users = await signerContract.contract.getOperators(
         params.organisationName
       );
-      console.log(users);
-      context.commit("setAllUsers", users);
+      commit("setAllUsers", users);
     },
-    async addUser(context, userData) {
-      const contract = (await getSignerContract()).contract;
-      const signer = (await getSignerContract()).signer;
+    async addUser({ commit }, userData) {
+      const { contract, signer } = await getSignerContract();
+      const isAvailable = await contract.isAvailable(userData.userWallet);
 
-      let result = await contract.isAvailable(userData.userWallet);
-
-      if (!result) {
-        const organization = await contract.testingAddress(signer.getAddress());
+      if (!isAvailable) {
+        const organization = await contract.testingAddress(
+          await signer.getAddress()
+        );
         try {
           const response = await contract.addOperator(
             userData.userName,
@@ -67,20 +87,20 @@ export const UserStore = {
             userData.userPosition
           );
           if (response.hash) {
-            context.commit("addUser", {
+            commit("addUser", {
               name: userData.userName,
               userAddress: userData.userWallet,
               position: userData.userPosition,
             });
-            await notifySuccess("Added user successfully!");
+            notifySuccess("Added user successfully!");
           }
         } catch (error) {
-          await notifyError("Failed to save user!");
+          notifyError("Failed to save user!");
         }
       } else {
-        await notifyWarning(`Address ${userData.userWallet} already exists!`);
+        notifyWarning(`Address ${userData.userWallet} already exists!`);
       }
     },
   },
-  modules: {},
+  plugins: [vuexLocal.plugin],
 };
