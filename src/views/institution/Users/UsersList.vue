@@ -36,12 +36,14 @@ export default {
   mounted() {
     this.$store.dispatch("clearUsers");
     this.$store.dispatch("setLoadingStatus", true);
-    this.$store.dispatch("fetchAllUsers").then(() => {
-      this.$store.dispatch("setLoadingStatus", false);
-      this.users = this.$store.getters.getAllUsers;
-
-      if (this.users.length > 0) this.isDocs = true;
-    });
+    this.$store
+      .dispatch("fetchAllUsers", { organisationName: "UDSM" })
+      .then(() => {
+        this.$store.dispatch("setLoadingStatus", false);
+        this.users = this.$store.getters.getAllUsers;
+        console.log(this.users);
+        if (this.users.length > 0) this.isDocs = true;
+      });
   },
 };
 </script>
