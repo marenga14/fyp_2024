@@ -25,6 +25,7 @@
 import SidebarImage from "@/components/shared/sidebarImage.vue";
 import Logo from "@/components/icons/logo.vue";
 import NavigationLinks from "@/components/shared/NavigationLinks.vue";
+import { mapState } from "vuex";
 
 let menu = [
   {
@@ -55,6 +56,14 @@ export default {
       location: "",
       organisations: [],
     };
+  },
+  computed: {
+    ...mapState({
+      user_Addres: (state) => state.UserStore.logeInUser.user_Addres,
+      user_Type: (state) => state.UserStore.logeInUser.user_Type,
+      name: (state) => state.UserStore.logeInUser.name,
+      org_Name: (state) => state.UserStore.logeInUser.org_Name,
+    }),
   },
   methods: {
     logout() {

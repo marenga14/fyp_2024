@@ -8697,6 +8697,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flatted@npm:^3.0.5":
+  version: 3.3.1
+  resolution: "flatted@npm:3.3.1"
+  checksum: 85ae7181650bb728c221e7644cbc9f4bf28bc556f2fc89bb21266962bdf0ce1029cc7acc44bb646cd469d9baac7c317f64e841c4c4c00516afa97320cdac7f94
+  languageName: node
+  linkType: hard
+
 "flatted@npm:^3.1.0":
   version: 3.2.7
   resolution: "flatted@npm:3.2.7"
@@ -15742,6 +15749,7 @@ __metadata:
     vue-sweetalert2: ^5.0.5
     vuetify: ^3.0.0-beta.0
     vuex: ^4.0.0
+    vuex-persist: ^3.1.3
     webfontloader: ^1.0.0
     webpack: ^5.75.0
     webpack-plugin-vuetify: ^2.0.0-alpha.0
@@ -17905,6 +17913,18 @@ vue-demi@latest:
     webpack-plugin-vuetify:
       optional: true
   checksum: ff06860102688cb3b445e38d9b51af57862ea92d872a2b41f770662978b36d4e8066680541a6cf9818b7e5f71c4d906f28dba514619b4c6debbbf2c25f1c7e0e
+  languageName: node
+  linkType: hard
+
+"vuex-persist@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "vuex-persist@npm:3.1.3"
+  dependencies:
+    deepmerge: ^4.2.2
+    flatted: ^3.0.5
+  peerDependencies:
+    vuex: ">=2.5"
+  checksum: 7cd8348c114da5e7ad1ff4a310782e9c7838b5937e033fe613b3f32c3afad61a9af2109caa8e5722731e64b7e5b9dff65cd0c5297289e3800e729236eb170fdd
   languageName: node
   linkType: hard
 

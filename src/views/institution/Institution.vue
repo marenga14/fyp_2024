@@ -3,7 +3,7 @@
     <nav>
       <v-navigation-drawer
         v-model="open"
-        class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md "
+        class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md"
       >
         <Logo :width="50" :height="80" />
         <hr class="border-neutral-50" />
@@ -48,9 +48,9 @@
           class="hidden-md-and-up"
           @click.stop="open = !open"
         ></v-app-bar-nav-icon>
-        <v-toolbar-title class="flex items-center">
+        <v-toolbar-title class="flex items-center gap-2">
           <p class="text-2xl font-bold">SECDOC</p>
-          <p class="text-xs font-normal">Welcome Joktam</p>
+          <p class="text-xl text-green-900 font-semibold">{{ name }}</p>
         </v-toolbar-title>
 
         <div class="inline-flex flex-row">
@@ -73,6 +73,7 @@ import SidebarImage from "@/components/shared/sidebarImage";
 import Logo from "@/components/icons/logo.vue";
 import NavigationLinks from "@/components/shared/NavigationLinks";
 import Progress from "@/components/icons/progress.vue";
+import { mapState } from "vuex";
 
 export const menu = [
   {
@@ -99,6 +100,18 @@ export const menu = [
 export default {
   name: "Institution",
   components: { SidebarImage, NavigationLinks, Logo, Progress },
+  computed: {
+    ...mapState({
+      user_Addres: (state) => state.UserStore.logeInUser.user_Addres,
+      user_Type: (state) => state.UserStore.logeInUser.user_Type,
+      name: (state) => state.UserStore.logeInUser.name,
+      org_Name: (state) => state.UserStore.logeInUser.org_Name,
+    }),
+  },
+  created() {
+    this.user = this.$store.getters.getCurrentUser;
+    console.log(this.user);
+  },
   data() {
     return {
       menu,

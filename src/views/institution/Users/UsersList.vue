@@ -18,6 +18,7 @@
 import AppHeader from "@/components/shared/AppHeader";
 import UserAdd from "@/views/institution/Users/UserAdd";
 import SimpleDataTable from "@/components/shared/SimpleDataTable";
+import { mapState } from "vuex";
 
 export default {
   name: "UsersList",
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       users: [],
+      org_Name: "",
       columns: {
         name: "Name",
         userAddress: "Address",
@@ -33,17 +35,30 @@ export default {
       isDocs: false,
     };
   },
-  mounted() {
+  computed: {
+    ...mapState({
+      user_Addres: (state) => state.UserStore.logeInUser.user_Addres,
+      user_Type: (state) => state.UserStore.logeInUser.user_Type,
+      name: (state) => state.UserStore.logeInUser.name,
+      org_Name: (state) => state.UserStore.logeInUser.org_Name,
+    }),
+  },
+  async mounted() {
     this.$store.dispatch("clearUsers");
     this.$store.dispatch("setLoadingStatus", true);
+    const currentUser = await this.$store.getters.getCurrentUser;
+
     this.$store
-      .dispatch("fetchAllUsers", { organisationName: "UDSM" })
+      .dispatch("fetchAllUsers", { organisationName: currentUser.org_Name })
       .then(() => {
         this.$store.dispatch("setLoadingStatus", false);
         this.users = this.$store.getters.getAllUsers;
         console.log(this.users);
         if (this.users.length > 0) this.isDocs = true;
       });
+  },
+  created() {
+    this.user = this.$store.getters.getCurrentUser;
   },
 };
 </script>

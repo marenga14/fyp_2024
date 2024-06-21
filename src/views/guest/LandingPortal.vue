@@ -291,10 +291,9 @@ export default defineComponent({
 
         try {
           const user = await contract.operatorLogin(signer.getAddress());
-          console.log(user);
-
+          await this.$store.dispatch("loginUser", { user: user });
           if (user) {
-            this.path = user;
+            this.path = user.userType;
             this.$router.push(this.path);
           } else {
             alert("Unauthorised / unknown address");
