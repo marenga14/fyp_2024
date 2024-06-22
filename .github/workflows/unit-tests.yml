@@ -1,0 +1,82 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      TARGET_HOST:
+        type: string
+        default: host.site.atomatiki.tech
+        required: false
+      HOSTNAME:
+        type: string
+        default: lukuchap_restapis
+        required: false
+      DOMAIN_NAME:
+        type: string
+        default: "lukuchap.site.atomatiki.tech"
+        required: false
+      IMAGE_TAG:
+        type: string
+        required: false
+        default: master
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: luku-chap/lukuchap_restapis
+
+jobs:
+  ansible:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Add SSH Keys
+        run: |
+          cat << EOF > docker/ansible/devops-key
+          ${{ secrets.SSH_DEVOPS_KEY_PRIVATE }}
+          EOF
+      - name: Update devops private key permissions
+        run: |
+          chmod 400 docker/ansible/devops-key
+      - name: Install Ansible
+        run: |
+          pip install ansible
+
+      - name: Adding or Override Ansible Config File
+        run: |
+          cat << EOF > ./docker/ansible/ansible.cfg
+          [defaults]
+          ansible_python_interpreter='/usr/bin/python3'
+          deprecation_warnings=False
+          inventory=./inventory.ini
+          remote_user="root"
+          remote_tmp="/root/.ansible/tmp"
+          host_key_checking=False
+          private_key_file = ./devops-key
+          retries=2
+          EOF
+
+      - name: Adding or Override Ansible inventory File
+        run: |
+          cat << EOF > ./docker/ansible/inventory.ini
+          [webservers]
+          ${{ inputs.TARGET_HOST }}
+          EOF
+
+      - name: Adding Ansible Variables
+        run: |
+          mkdir -p docker/ansible/web-app/vars/
+          cat << EOF > docker/ansible/web-app/vars/main.yaml
+          ---
+          HOSTNAME: "${{ inputs.HOSTNAME }}"
+          IMAGE: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          IMAGE_TAG: "${{ inputs.IMAGE_TAG }}"
+          DOMAIN_NAME: "${{ inputs.DOMAIN_NAME }}"
+          DOCKER_TOKEN: "${{ secrets.DOCKER_TOKEN }}"
+          DOCKER_USERNAME: "jackkweyunga"
+          EOF
+
+      - name: Run main playbook
+        run: |
+          ANSIBLE_CONFIG=docker/ansible/ansible.cfg ansible-playbook docker/ansible/main.yml
