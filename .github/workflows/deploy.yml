@@ -21,30 +21,30 @@ env:
   ECS_CLUSTER: secdocc                                         # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task_definitions.json                # set this to the path to your Amazon ECS task definition  # 
                                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: secure_document                              # set this to the name of the container in the
+  CONTAINER_NAME: secure_document_container                    # set this to the name of the container in the
                                                                # containerDefinitions section of your task definition
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: yarn --frozen-lockfile
-    - run: yarn build 
-    - run: yarn  test
+  # build:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #       cache: 'npm'
+  #   - run: yarn --frozen-lockfile
+  #   - run: yarn build 
+  #   - run: yarn  test
 
   deploy:
     name: Deploy
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     environment: production
 
