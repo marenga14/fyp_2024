@@ -20,4 +20,4 @@ COPY . .
 RUN yarn build
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD [ "npx", "http-server", "dist" ]
