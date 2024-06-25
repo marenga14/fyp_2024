@@ -36,19 +36,19 @@ export const UserStore = {
       state.allUsers.push(user);
     },
     setAllUsers(state, users) {
-      state.allUsers = users.map((user) => ({
-        name: user.name,
-        organization: user.organisation,
-        position: user.position,
-        userAddress: user.userAddress,
+      state.allUsers = users?.map((user) => ({
+        name: user?.name,
+        organization: user?.organisation,
+        position: user?.position,
+        userAddress: user?.userAddress,
       }));
     },
     setCurrentLogedInUser(state, user) {
       const logedUser = {
-        user_Addres: user.userAddres,
-        user_Type: user.userType,
+        user_Addres: user?.userAddres,
+        user_Type: user?.userType,
         name: user.name ? user.name : user.orgName,
-        org_Name: user.orgName,
+        org_Name: user?.orgName,
       };
       state.logeInUser = logedUser;
     },

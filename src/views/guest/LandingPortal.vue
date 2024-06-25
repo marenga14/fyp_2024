@@ -227,6 +227,12 @@ import VerifyDoc from "@/components/icons/file-verify.vue";
 import CloudStorage from "@/components/icons/file-cloud.vue";
 import HomeLock from "@/components/icons/home-lock.vue";
 import VerifyModal from "./verifyModal.vue";
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
+onMounted(() => {
+  initFlowbite();
+});
 
 export default defineComponent({
   name: "LandingPortal",
@@ -239,10 +245,13 @@ export default defineComponent({
       orgs: {},
       path: "",
       connected: false,
+      verify: false,
     };
   },
   mounted() {
     window.addEventListener("scroll", this.upDateScrollPosition);
+    initFlowbite();
+    this.verify = false;
   },
 
   components: {
@@ -293,8 +302,8 @@ export default defineComponent({
           const user = await contract.operatorLogin(signer.getAddress());
           await this.$store.dispatch("loginUser", { user: user });
           if (user) {
-            this.path = user.userType;
-            this.$router.push(this.path);
+            this.path = user?.userType;
+            this.$router.push(this?.path);
           } else {
             alert("Unauthorised / unknown address");
           }

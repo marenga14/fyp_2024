@@ -1,7 +1,14 @@
 <template>
   <div class="flex flex-col">
     <AppHeader title="Institution Users"></AppHeader>
-    <UserAdd />
+    <div
+      class="bg-[url('/public/images/palette.svg')] bg-cover h-40 bg-no-repeat shadow-gray-400 py-6 rounded-md mt-5"
+    >
+      <div class="px-2">
+        <UserAdd />
+      </div>
+    </div>
+
     <div class="my-2">
       <simple-data-table
         class="h-full"
