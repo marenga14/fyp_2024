@@ -26,25 +26,25 @@ env:
 
 jobs:
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [20.x]
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   - run: yarn --frozen-lockfile
-  #   - run: yarn build 
-  #   - run: yarn  test
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: yarn --frozen-lockfile
+    - run: yarn build 
+    - run: yarn  test
 
   deploy:
     name: Deploy
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
     environment: production
 
