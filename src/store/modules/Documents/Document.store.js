@@ -55,6 +55,7 @@ export const DocumentStore = {
           status: document.hasDocument ? "Yes" : "No",
         };
       });
+      console.log(allDocuments);
       context.commit("setAllDocuments", allDocuments);
     },
     async addDocument(context, documentData) {
@@ -130,12 +131,13 @@ export const DocumentStore = {
     },
 
     async verifyingDocument(context, documentData) {
-      const cid = await ipfsClient.add(documentData.file);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, abi, signer);
-
       try {
+        const cid = await ipfsClient.add(documentData.file);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        console.log(cid.path);
+        // let cid = { path: "QmPoKMho1S35aAFjDSUoAQA3nxtJGLrxkQhJLovGyHWEcM" };
         const status = await contract.verifyDocument(cid.path);
         context.commit("verfying.....", document);
         console.log(status);
