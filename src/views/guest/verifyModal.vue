@@ -1,8 +1,8 @@
 <template>
   <v-card>
     <v-tabs fixed-tabs v-model="tab" bg-color="#155073">
-      <v-tab value="one"> Using Document ID</v-tab>
-      <v-tab value="two"> Using Document</v-tab>
+      <v-tab value="one">Using Document </v-tab>
+      <v-tab value="two"> Using Document ID</v-tab>
     </v-tabs>
 
     <v-card-text class="bg-gray-50 h-full">
@@ -23,6 +23,31 @@
               </v-btn>
             </div>
           </v-form>
+          <div
+            v-if="loading"
+            class="flex justify-center items-center h-10 mt-10"
+          >
+            <v-progress-circular
+              :size="30"
+              color="success"
+              indeterminate
+            ></v-progress-circular>
+          </div>
+
+          <div v-if="verify" class="flex items-center justify-center h-40">
+            <div
+              v-if="validDoc"
+              class="h-full bg-green-200 text-gray-300 font-semibold text-xl flex justify-center items-center w-full"
+            >
+              <h2>Valid....</h2>
+            </div>
+            <div
+              v-if="!validDoc"
+              class="h-full bg-red-200 text-gray-800 font-semibold text-xl flex justify-center items-center w-full"
+            >
+              <h2>InValid....</h2>
+            </div>
+          </div>
         </v-tabs-window-item>
 
         <v-tabs-window-item value="two">
