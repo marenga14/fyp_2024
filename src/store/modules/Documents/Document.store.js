@@ -37,26 +37,28 @@ export const DocumentStore = {
   },
   actions: {
     async fetchAllDocuments(context) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, abi, signer);
-      let allDocuments = await contract.getDocuments(signer.getAddress());
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        let allDocuments = await contract.getDocuments(signer.getAddress());
 
-      allDocuments = allDocuments.map((document) => {
-        return {
-          documentName: document.docName,
-          documentDescription: document.description,
-          time: dayjs(document.time).format("dddd, MMMM D YYYY"),
-          documentCid: document.cidValue,
-          documentId: document.identification,
-          documentOwner: document.ownerName,
-          sender: document.sender,
-          hasDocument: document.hasDocument,
-          status: document.hasDocument ? "Yes" : "No",
-        };
-      });
-      console.log(allDocuments);
-      context.commit("setAllDocuments", allDocuments);
+        allDocuments = allDocuments.map((document) => {
+          return {
+            documentName: document.docName,
+            documentDescription: document.description,
+            time: dayjs(document.time).format("dddd, MMMM D YYYY"),
+            documentCid: document.cidValue,
+            documentId: document.identification,
+            documentOwner: document.ownerName,
+            sender: document.sender,
+            hasDocument: document.hasDocument,
+            status: document.hasDocument ? "Yes" : "No",
+          };
+        });
+        console.log(allDocuments);
+        context.commit("setAllDocuments", allDocuments);
+      } catch (error) {}
     },
     async addDocument(context, documentData) {
       const identification = documentData.identification;
@@ -64,12 +66,13 @@ export const DocumentStore = {
       const cid = "XXXX-XXXX-XXXX";
       const documentName = `${documentData.ownerName}-${documentData.description}`;
       const documentDescription = documentData.description;
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, abi, signer);
-      const time = getFormatedTimeStampStartWithDate();
 
       try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const time = getFormatedTimeStampStartWithDate();
+
         const storedResponse = await contract.storeDocument(
           cid,
           time,
@@ -99,25 +102,28 @@ export const DocumentStore = {
 
     async updateDocument(context, documentData) {
       const identification = documentData.identification;
-      const cid = await ipfsClient.add(documentData.file);
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, abi, signer);
+      try {
+        const cid = await ipfsClient.add(documentData.file);
 
-      const storedResponse = await contract.updateDocumentFile(
-        cid.path,
-        identification
-      );
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
 
-      if (storedResponse.hash) {
-        context.commit("updateDocument", {
-          documentCid: cid.path,
-        });
-        await notifySuccess("Updated document successfully!");
-      } else {
-        await notifyError("Failed to updating document!");
-      }
+        const storedResponse = await contract.updateDocumentFile(
+          cid.path,
+          identification
+        );
+
+        if (storedResponse.hash) {
+          context.commit("updateDocument", {
+            documentCid: cid.path,
+          });
+          await notifySuccess("Updated document successfully!");
+        } else {
+          await notifyError("Failed to updating document!");
+        }
+      } catch (error) {}
     },
     async retrieveSingleDocument(context, documentData) {
       const identification = documentData.identification;
@@ -131,13 +137,17 @@ export const DocumentStore = {
     },
 
     async verifyingDocument(context, documentData) {
+      console.log("documentData");
+      console.log(documentData);
       try {
         const cid = await ipfsClient.add(documentData.file);
+        console.log("cid.path");
+        console.log(cid.path);
+
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer);
         console.log(cid.path);
-        // let cid = { path: "QmPoKMho1S35aAFjDSUoAQA3nxtJGLrxkQhJLovGyHWEcM" };
         const status = await contract.verifyDocument(cid.path);
         context.commit("verfying.....", document);
         console.log(status);

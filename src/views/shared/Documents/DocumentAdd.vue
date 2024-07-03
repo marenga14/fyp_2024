@@ -104,7 +104,7 @@ export default {
       nameRules: [
         (v) => !!v || "Name is required",
         (v) =>
-          (v && v.length >= 3) || "Name must be greater than 10 characters",
+          (v && v?.length >= 3) || "Name must be greater than 10 characters",
       ],
     };
   },

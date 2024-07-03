@@ -61,15 +61,21 @@ export const UserStore = {
       commit("clearUsers");
     },
     async loginUser({ commit }, contentData) {
-      const user = contentData.user;
-      commit("setCurrentLogedInUser", user);
+      try {
+        const user = contentData.user;
+        commit("setCurrentLogedInUser", user);
+      } catch (error) {
+        console.log(error);
+      }
     },
     async fetchAllUsers({ commit }, params) {
-      const signerContract = await getSignerContract();
-      const users = await signerContract.contract.getOperators(
-        params.organisationName
-      );
-      commit("setAllUsers", users);
+      try {
+        const signerContract = await getSignerContract();
+        const users = await signerContract.contract.getOperators(
+          params.organisationName
+        );
+        commit("setAllUsers", users);
+      } catch (error) {}
     },
     async addUser({ commit }, userData) {
       const { contract, signer } = await getSignerContract();

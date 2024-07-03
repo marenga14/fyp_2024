@@ -7,11 +7,11 @@
         <v-card-title
           class="text-3xl font-bold text-secondary-content flex items-center bg-gray-100 border h-16"
         >
-          {{ card.name }}
+          {{ card?.name }}
         </v-card-title>
         <v-card-text
           class="h-40 flex justify-center items-center text-secondary-content text-7xl font-extrabold"
-          >{{ card.number }}</v-card-text
+          >{{ card?.number }}</v-card-text
         >
       </v-card>
     </div>
@@ -37,9 +37,7 @@
     </div>
   </div> -->
 </template>
-
 <script>
-import { data } from "autoprefixer";
 import Chart from "chart.js/auto";
 import { getRelativePosition } from "chart.js/helpers";
 import { mapState } from "vuex";

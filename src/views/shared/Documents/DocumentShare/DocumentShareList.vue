@@ -5,7 +5,7 @@
       <timeline
         class="mt-4"
         :timelineData="documentShares"
-        v-if="documentShares.length !== 0"
+        v-if="documentShares?.length !== 0"
       >
       </timeline>
 

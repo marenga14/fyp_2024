@@ -61,7 +61,7 @@ export default {
         this.$store.dispatch("setLoadingStatus", false);
         this.users = this.$store.getters.getAllUsers;
         console.log(this.users);
-        if (this.users.length > 0) this.isDocs = true;
+        if (this.users?.length > 0) this.isDocs = true;
       });
   },
   created() {

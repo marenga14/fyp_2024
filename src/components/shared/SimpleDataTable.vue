@@ -23,7 +23,7 @@
           <th v-if="hasActions" class="px-6 py-3 text-left">Actions</th>
         </tr>
       </thead>
-      <tbody v-if="sortedData.length">
+      <tbody v-if="sortedData?.length">
         <tr
           v-bind:key="index"
           v-for="(data, index) in sortedData"
@@ -43,7 +43,7 @@
           </td>
         </tr>
       </tbody>
-      <tfoot v-if="!sortedData.length">
+      <tfoot v-if="!sortedData?.length">
         <tr>
           <td colspan="100%" class="px-6 py-4 text-center text-gray-500">
             No data found

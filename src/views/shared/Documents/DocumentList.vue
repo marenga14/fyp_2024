@@ -154,7 +154,7 @@ export default {
       this.$store.dispatch("fetchAllDocuments").then(() => {
         this.$store.dispatch("setLoadingStatus", false);
         this.documents = this.$store.getters.getAllDocuments;
-        if (this.documents.length > 0) this.isDocs = true;
+        if (this.documents?.length > 0) this.isDocs = true;
       });
     },
   },
