@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <!-- <div class="bg-gray-200 rounded-md h-[540px] mt-6">
+  <div class="bg-gray-200 rounded-md h-[540px] mt-6">
     <div class="flex justify-between bg-gray-100 p-2 border">
       <input
         placeholder="Search"
@@ -46,7 +46,7 @@
     <div class="w-full h-[470px] mx-auto px-4 py-2">
       <canvas id="acquisitions"></canvas>
     </div>
-  </div> -->
+  </div>
 </template>
 <script>
 import Chart from "chart.js/auto";
