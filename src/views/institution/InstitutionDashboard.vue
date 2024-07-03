@@ -1,7 +1,18 @@
 <template>
   <div
-    class="bg-[url('/public/images/palette.svg')] items-center bg-no-repeat bg-cover flex fex-row flex-wrap gap-2 w-full px-4 justify-start shadow-gray-200 rounded-md md:h-96"
+    class="bg-[url('/public/images/palette.svg')] relative items-center bg-no-repeat bg-cover flex fex-row flex-wrap gap-2 w-full px-4 justify-start shadow-gray-200 rounded-md md:h-96"
   >
+    <div
+      class="absolute w-64 h-64 mr-32 left-[50%] top-52 rounded-full border border-green-400 bg-white flex items-center justify-center"
+    >
+      <v-img
+        src="@/assets/images/download.png"
+        class="hover:cursor-pointer w-[50%] h-[50%]"
+      />
+    </div>
+  </div>
+
+  <div class="flex gap-2 mt-20">
     <div :key="index" v-for="(card, index) of cards" class="w-1/4 h-72">
       <v-card class="w-full h-full">
         <v-card-title
@@ -49,13 +60,13 @@ export default {
     return {
       cards: [
         {
-          name: "Users",
-          number: 2,
+          name: "Operators",
+          number: null,
           color: "",
         },
         {
           name: "Documents",
-          number: 12,
+          number: null,
           color: "",
         },
       ],
@@ -110,7 +121,7 @@ export default {
       .then(() => {
         this.$store.dispatch("setLoadingStatus", false);
         this.users = this.$store.getters.getAllUsers;
-        this.cards[0].number === this.users?.length || 0;
+        this.cards[0].number = this.users?.length || 0;
       });
 
     this.$store.dispatch("clearDocuments");

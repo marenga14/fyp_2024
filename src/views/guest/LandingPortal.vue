@@ -63,7 +63,11 @@
         <div
           class="bg-[#22A75D] hover:cursor-pointer rounded-md pl-1 pr-2 py-1 text-xl font-bold text-secondary-background flex gap-2 items-center"
         >
-          <v-btn @click="OpenDialog" flat class="mx-2 py-2 px-10 bg-[#22A75D]">
+          <v-btn
+            @click="OpenDialog"
+            flat
+            class="rounded-md px-10 py-1 text-lg font-bold text-secondary-background bg-[#22A75D]"
+          >
             VERIFY
           </v-btn>
           <span
@@ -227,12 +231,6 @@ import VerifyDoc from "@/components/icons/file-verify.vue";
 import CloudStorage from "@/components/icons/file-cloud.vue";
 import HomeLock from "@/components/icons/home-lock.vue";
 import VerifyModal from "./verifyModal.vue";
-import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
-
-onMounted(() => {
-  initFlowbite();
-});
 
 export default defineComponent({
   name: "LandingPortal",
@@ -250,7 +248,7 @@ export default defineComponent({
   },
   mounted() {
     window.addEventListener("scroll", this.upDateScrollPosition);
-    initFlowbite();
+
     this.verify = false;
   },
 
@@ -268,10 +266,12 @@ export default defineComponent({
   },
   methods: {
     async connectWallet() {
-      if (typeof window.ethereum !== "undefined") {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        this.dialog = true;
-      }
+      try {
+        if (typeof window.ethereum !== "undefined") {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          this.dialog = true;
+        }
+      } catch (error) {}
     },
 
     onCloseDialog() {
@@ -291,26 +291,28 @@ export default defineComponent({
     },
 
     async Login() {
-      if (typeof window.ethereum !== undefined) {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+      try {
+        if (typeof window.ethereum !== undefined) {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, abi, signer);
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(contractAddress, abi, signer);
 
-        try {
-          const user = await contract.operatorLogin(signer.getAddress());
-          await this.$store.dispatch("loginUser", { user: user });
-          if (user) {
-            this.path = user?.userType;
-            this.$router.push(this?.path);
-          } else {
-            alert("Unauthorised / unknown address");
+          try {
+            const user = await contract.operatorLogin(signer.getAddress());
+            await this.$store.dispatch("loginUser", { user: user });
+            if (user) {
+              this.path = user?.userType;
+              this.$router.push(this?.path);
+            } else {
+              alert("Unauthorised / unknown address");
+            }
+          } catch (err) {
+            console.log(err);
           }
-        } catch (err) {
-          console.log(err);
         }
-      }
+      } catch (error) {}
     },
   },
 });

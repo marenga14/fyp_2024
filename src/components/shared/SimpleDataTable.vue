@@ -44,7 +44,7 @@
         </tr>
       </tbody>
       <tfoot v-if="!sortedData?.length">
-        <tr>
+        <tr class="h-64">
           <td colspan="100%" class="px-6 py-4 text-center text-gray-500">
             No data found
           </td>
