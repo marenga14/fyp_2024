@@ -1,5 +1,57 @@
 <template>
-  <div class="mb-2 border-b border-gray-200 dark:border-gray-700 h-full">
+  <v-card>
+    <v-tabs fixed-tabs v-model="tab" bg-color="#155073">
+      <v-tab value="one"> Using Document ID</v-tab>
+      <v-tab value="two"> Using Document</v-tab>
+    </v-tabs>
+
+    <v-card-text class="bg-gray-50 h-full">
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="one">
+          <v-form v-if="!verify" ref="form1">
+            <div class="bg-[#f6f6f6] border h-14">
+              <v-file-input
+                @change="onchangeFile"
+                class="h-full"
+                label="Upload document"
+              ></v-file-input>
+            </div>
+
+            <div class="flex justify-end w-1/2">
+              <v-btn class="mt-4" color="success" block @click="verifyDocument">
+                Verify
+              </v-btn>
+            </div>
+          </v-form>
+        </v-tabs-window-item>
+
+        <v-tabs-window-item value="two">
+          <v-form ref="form2">
+            <v-text-field
+              @change="onChangeFunc"
+              v-model="cid"
+              :counter="10"
+              :rules="nameRules"
+              label="Document ID"
+              required
+            ></v-text-field>
+
+            <div class="flex justify-end w-full">
+              <v-btn
+                class="mt-4"
+                color="success"
+                block
+                @click="retrieveDocument"
+              >
+                Verify
+              </v-btn>
+            </div>
+          </v-form>
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-card-text>
+  </v-card>
+  <!-- <div class="mb-2 border-b border-gray-200 dark:border-gray-700 h-full">
     <ul
       class="flex -mb-px text-sm font-medium text-center"
       id="default-styled-tab"
@@ -112,7 +164,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -129,6 +181,7 @@ export default {
   data() {
     return {
       name: "",
+      tab: "one",
       documentId: undefined,
       verify: false,
       validDoc: false,

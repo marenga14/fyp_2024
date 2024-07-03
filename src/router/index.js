@@ -171,7 +171,7 @@ export const routes = [
         meta: { userAccessed: "institution" },
       },
       {
-        path: "document-details/:cid",
+        path: "document-details/:cid/:documentId",
         component: DocumentDetails,
         meta: { userAccessed: "institution" },
       },

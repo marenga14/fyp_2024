@@ -130,7 +130,7 @@ export default {
     openDoc(document) {
       console.log(this.documents);
       this.$router.push(
-        `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}`
+        `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}/${document.documentId}`
       );
     },
     updateDocFunction() {
