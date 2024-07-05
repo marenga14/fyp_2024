@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     backNavigate() {
-      if (window.history.length > 2) this.$router.go(-1)
+      if (window.history?.length > 2) this.$router.go(-1)
     }
   }
 }

@@ -130,7 +130,7 @@ export default {
     openDoc(document) {
       console.log(this.documents);
       this.$router.push(
-        `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}`
+        `/${this.$route.meta.userAccessed}/document-details/${document.documentCid}/${document.documentId}`
       );
     },
     updateDocFunction() {
@@ -154,7 +154,7 @@ export default {
       this.$store.dispatch("fetchAllDocuments").then(() => {
         this.$store.dispatch("setLoadingStatus", false);
         this.documents = this.$store.getters.getAllDocuments;
-        if (this.documents.length > 0) this.isDocs = true;
+        if (this.documents?.length > 0) this.isDocs = true;
       });
     },
   },

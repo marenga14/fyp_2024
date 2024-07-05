@@ -1,7 +1,14 @@
 <template>
   <div class="flex flex-col">
     <AppHeader title="Institution Users"></AppHeader>
-    <UserAdd />
+    <div
+      class="bg-[url('/public/images/palette.svg')] bg-cover h-40 bg-no-repeat shadow-gray-400 py-6 rounded-md mt-5"
+    >
+      <div class="px-2">
+        <UserAdd />
+      </div>
+    </div>
+
     <div class="my-2">
       <simple-data-table
         class="h-full"
@@ -18,6 +25,7 @@
 import AppHeader from "@/components/shared/AppHeader";
 import UserAdd from "@/views/institution/Users/UserAdd";
 import SimpleDataTable from "@/components/shared/SimpleDataTable";
+import { mapState } from "vuex";
 
 export default {
   name: "UsersList",
@@ -25,6 +33,7 @@ export default {
   data() {
     return {
       users: [],
+      org_Name: "",
       columns: {
         name: "Name",
         userAddress: "Address",
@@ -33,15 +42,30 @@ export default {
       isDocs: false,
     };
   },
-  mounted() {
+  computed: {
+    ...mapState({
+      user_Addres: (state) => state.UserStore.logeInUser.user_Addres,
+      user_Type: (state) => state.UserStore.logeInUser.user_Type,
+      name: (state) => state.UserStore.logeInUser.name,
+      org_Name: (state) => state.UserStore.logeInUser.org_Name,
+    }),
+  },
+  async mounted() {
     this.$store.dispatch("clearUsers");
     this.$store.dispatch("setLoadingStatus", true);
-    this.$store.dispatch("fetchAllUsers").then(() => {
-      this.$store.dispatch("setLoadingStatus", false);
-      this.users = this.$store.getters.getAllUsers;
+    const currentUser = await this.$store.getters.getCurrentUser;
 
-      if (this.users.length > 0) this.isDocs = true;
-    });
+    this.$store
+      .dispatch("fetchAllUsers", { organisationName: currentUser.org_Name })
+      .then(() => {
+        this.$store.dispatch("setLoadingStatus", false);
+        this.users = this.$store.getters.getAllUsers;
+        console.log(this.users);
+        if (this.users?.length > 0) this.isDocs = true;
+      });
+  },
+  created() {
+    this.user = this.$store.getters.getCurrentUser;
   },
 };
 </script>

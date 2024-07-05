@@ -32,7 +32,12 @@ export const ipfsClient = create({
 
 export const ipfsGateway = "https://secure-doc.infura-ipfs.io/ipfs/";
 
-export const contractAddress = "0xB039B6d731F5E61B98e8e8E9d691b54C4b00b8B5";
+export const contractAddress = "0xD7eb76758BB22BB80FD7FE4DDf6280818BaABF9c";
+//0xc4340b112706afa581feb783dd8b351ebf2a9c85
+//
+//0xB039B6d731F5E61B98e8e8E9d691b54C4b00b8B5
+//0x3605217C0703f5879D67226106b426e1195c9C5B
+//
 
 export const abi = [
   {
@@ -479,9 +484,9 @@ export const abi = [
             type: "tuple[]",
           },
         ],
-        internalType: "struct OperatorLibrary.Operator",
+        internalType: "struct OperatorLibrary.Operator[]",
         name: "",
-        type: "tuple",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -694,9 +699,31 @@ export const abi = [
     name: "operatorLogin",
     outputs: [
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "address",
+            name: "userAddres",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "userType",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "orgName",
+            type: "string",
+          },
+        ],
+        internalType: "struct SecureDocument.Users",
         name: "",
-        type: "string",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -1040,6 +1067,16 @@ export const abi = [
       {
         internalType: "string",
         name: "userType",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "orgName",
         type: "string",
       },
     ],
