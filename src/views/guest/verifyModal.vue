@@ -267,7 +267,7 @@
             <v-text-field
               @change="onChangeFunc"
               v-model="documentId"
-              :counter="10"
+              :counter="20"
               :rules="nameRules"
               label="Document ID"
               required
@@ -309,8 +309,8 @@ export default {
       nameRules: [
         (v) => !!v || "Document ID is required",
         (v) =>
-          (v && v?.length <= 10) ||
-          "Document ID must be less than 10 characters",
+          (v && v?.length >= 10) ||
+          "Document ID must be GREATER than 10 characters",
       ],
     };
   },
