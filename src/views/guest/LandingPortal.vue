@@ -150,8 +150,7 @@
               <p>
                 Safely store and organize your documents in our secure cloud
                 storage solution. Access your files from anywhere, anytime, and
-                never worry about losing important paperwork again. Your
-                documents are encrypted and backed up for peace of mind.
+                never worry about losing important paperwork again.  
               </p>
             </div>
           </div>
