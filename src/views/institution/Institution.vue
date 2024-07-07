@@ -5,7 +5,8 @@
         v-model="open"
         class="bg-secondary-focus/40 relative mt-2 mr-2 ml-1 rounded-md"
       >
-        <Logo :width="50" :height="80" />
+        <div class="hover:rotate-180"><Logo :width="50" :height="80" /></div>
+
         <hr class="border-neutral-50" />
         <!-- <SidebarImage></SidebarImage> -->
         <NavigationLinks :menu="menu"></NavigationLinks>
