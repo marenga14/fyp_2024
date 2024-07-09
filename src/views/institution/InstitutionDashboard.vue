@@ -43,8 +43,14 @@
         </v-btn-group>
       </div>
     </div>
-    <div class="w-full h-[470px] mx-auto px-4 py-2">
-      <canvas id="acquisitions"></canvas>
+    <div class="flex gap-2 h-[470px] px-4 py-2">
+      <div class="h-full w-1/2 border rounded-md shadow-sm">
+        <canvas id="acquisitions"></canvas>
+      </div>
+
+      <div class="h-full w-1/2 border rounded-md shadow-sm">
+        <canvas id="acquisition"></canvas>
+      </div>
     </div>
   </div>
 </template>
@@ -90,18 +96,41 @@ export default {
         { year: "December", count: 0 },
       ];
 
-      // new Chart(document.getElementById("acquisitions"), {
-      //   type: "bar",
-      //   data: {
-      //     labels: data.map((row) => row.year),
-      //     datasets: [
-      //       {
-      //         label: "Document share Monthly",
-      //         data: data.map((row) => row.count),
-      //       },
-      //     ],
-      //   },
-      // });
+      const data2 = [
+        { year: "Monday", count: 1 },
+        { year: "Tuesday", count: 20 },
+        { year: "Wednesday", count: 5 },
+        { year: "Thursday", count: 25 },
+        { year: "Friday", count: 22 },
+        { year: "Saturday", count: 0 },
+        { year: "Sunday", count: 0 },
+      ];
+
+      new Chart(document.getElementById("acquisitions"), {
+        type: "bar",
+        data: {
+          labels: data.map((row) => row.year),
+          datasets: [
+            {
+              label: "Document share Monthly",
+              data: data.map((row) => row.count),
+            },
+          ],
+        },
+      });
+
+      new Chart(document.getElementById("acquisition"), {
+        type: "line",
+        data: {
+          labels: data2.map((row) => row.year),
+          datasets: [
+            {
+              label: "Document share Weekly",
+              data: data2.map((row) => row.count),
+            },
+          ],
+        },
+      });
     },
   },
   computed: {
@@ -132,7 +161,7 @@ export default {
       this.cards[1].number = this.documents?.length || 0;
     });
 
-    //this.chart();
+    this.chart();
   },
 
   // async created() {
