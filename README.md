@@ -1,4 +1,12 @@
 # 🔐 SecDoc UI  
+
+```
+This project was the part of the final year project 2024, which was later used in BASE AFRICA end of 2024 and won around  3 ETH.
+
+https://legitify-jade.vercel.app/
+
+https://www.hackquest.io/projects/Code-Africa-Hackathon-20-Legitify
+```
 ### Decentralized Document Verification DApp
 
 > SecDoc UI is a decentralized application (DApp) built to verify, register, and authenticate documents on-chain.  
